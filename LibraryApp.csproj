@@ -83,8 +83,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\BuisnesLogic\DataManagment\IDataController.cs" />
-    <Compile Include="Models\BuisnesLogic\DataManagment\JsonDataController.cs" />
+    <Compile Include="Models\BuisnesLogic\Abstractions\BaseRepository.cs" />
+    <Compile Include="Models\BuisnesLogic\DataManagment\BookRepository.cs" />
+    <Compile Include="Models\BuisnesLogic\DataManagment\ReaderRepository.cs" />
     <Compile Include="Models\Entities\Author.cs" />
     <Compile Include="Models\Entities\Book.cs" />
     <Compile Include="Models\Entities\PersonData.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Models\Entities\Reader.cs" />
     <Compile Include="Models\Example\MathFunc.cs" />
     <Compile Include="Models\Example\MathFuncBase.cs" />
+    <Compile Include="Models\Extensions\StringExtensions.cs" />
     <Compile Include="ViewModels\Example\SumVM.cs" />
     <Compile Include="ViewModels\Example\SumVMBase.cs" />
     <Compile Include="Views\Example\SumView.xaml.cs">

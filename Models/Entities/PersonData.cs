@@ -12,7 +12,6 @@ namespace LibraryApp.Models.Entities
         public string LastName { get; set; }
         public string Patronymic { get; set; }
 
-        public virtual string GetFullName => $"{LastName} {Name} {Patronymic}".Trim();
-
+        public virtual string FullName => $"{LastName} {Name} {Patronymic}".Trim();
     }
 }
