@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace Library.App.ViewModels
 {
-    public class AddReaderViewModel : INotifyPropertyChanged
+    public class AddReaderViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
         private readonly ReaderRepository _repository;
 
@@ -51,7 +51,32 @@ namespace Library.App.ViewModels
             }
         }
 
-        public ICommand CreateReaderCommand;
+        public string Error => null;
+
+        public string this[string columnName]
+        {
+            get 
+            {
+                string error = string.Empty;
+                switch (columnName)
+                {
+                    case nameof(Name):
+                        if (string.IsNullOrWhiteSpace(Name)) error = "Name is required";
+                        break;
+                    case nameof(LastName):
+                        if (string.IsNullOrWhiteSpace(LastName)) error = "Last name is required";
+                        break;
+                    case nameof(Address):
+                        if (string.IsNullOrWhiteSpace(Address)) error = "Address is required";
+                        else if (Address.Length < 5) error = "Address too short";
+                        break;
+                }
+                return error;
+            }
+        }
+
+        public ICommand CreateReaderCommand { get; }
+        public ICommand CloseCommand { get; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         public event Action? RequestClose;
@@ -59,6 +84,7 @@ namespace Library.App.ViewModels
         public AddReaderViewModel(ReaderRepository repository)
         {
             CreateReaderCommand = new RelayCommand((o) => CreateReader());
+            CloseCommand = new RelayCommand((o) => RequestClose?.Invoke());
             _repository = repository;
         }
 
@@ -76,6 +102,7 @@ namespace Library.App.ViewModels
             if (_repository.Add(reader))
             {
                 MessageBox.Show("Читатель успешно добавлен!");
+                RequestClose?.Invoke();
             }
             else
             {

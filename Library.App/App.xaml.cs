@@ -1,4 +1,6 @@
-﻿using Library.App.Models.Repositories;
+﻿using Library.App.DI;
+using Library.App.Models.Repositories;
+using Library.App.View;
 using Library.App.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
@@ -22,6 +24,8 @@ namespace Library.App
 
             services.AddTransient<ReaderViewModel>();
             services.AddTransient<AddReaderViewModel>();
+
+            services.AddFactory<AddReaderWindow>();
 
             ServiceProvider = services.BuildServiceProvider();
         }

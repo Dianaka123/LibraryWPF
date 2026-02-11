@@ -63,13 +63,16 @@
         </Grid.ColumnDefinitions>
 
         <TextBox Style="{DynamicResource RoundedTextBoxStyle}" Grid.Row="0" Grid.Column="0" Margin="10 10 5 10"/>
-        <Button Grid.Row="0" Grid.Column="1" Margin="5 10 10 10" Command="{Binding Add}"/>
+        <Button Grid.Row="0" Grid.Column="1" Margin="5 10 10 10" Command="{Binding OpenAddReaderCommand}"/>
 
         <ListView Grid.Row="1" Grid.ColumnSpan="2" Margin="10 10 10 10">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="Auto" Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"/>
+                    <GridViewColumn Width="auto" Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Width="auto"  Header="Last name" DisplayMemberBinding="{Binding LastName}"/>
+                    <GridViewColumn Width="auto" Header="Patronymic" DisplayMemberBinding="{Binding Patronymic}"/>
+                    <GridViewColumn Width="auto" Header="Address" DisplayMemberBinding="{Binding Address}"/>
+                    <GridViewColumn Width="auto" Header="Birthday" DisplayMemberBinding="{Binding Birthday}"/>
                 </GridView>
             </ListView.View>
         </ListView>

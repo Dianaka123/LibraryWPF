@@ -1,6 +1,8 @@
-﻿using Library.App.Models.Commands;
+﻿using Library.App.DI;
+using Library.App.Models.Commands;
 using Library.App.Models.Entities;
 using Library.App.Models.Repositories;
+using Library.App.View;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
@@ -11,26 +13,30 @@ namespace Library.App.ViewModels
     public class ReaderViewModel: INotifyPropertyChanged
     {
         private ReaderRepository _repository;
-        public ICollectionView Readers;
-
+        private IFactory<AddReaderWindow> _addReaderWindowFactory;
         private string _searchText;
-        public string SearchText {
+
+        public string SearchText
+        {
             get => _searchText;
             set
             {
                 _searchText = value;
                 OnPropertyChanged();
                 UpdateFilter();
-            } 
+            }
         }
+        public ICollectionView Readers { get; }
+        public ICommand SearchCommand { get; }
+        public ICommand OpenAddReaderCommand { get; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        public ICommand SearchCommand;
-        public ICommand OpenAddReader;
 
-        public ReaderViewModel(ReaderRepository repository)
+
+        public ReaderViewModel(ReaderRepository repository, IFactory<AddReaderWindow> factory)
         {
             _repository = repository;
+            _addReaderWindowFactory = factory;
 
             Readers = CollectionViewSource.GetDefaultView(_repository.Records);
             Readers.Filter = (o) =>
@@ -43,7 +49,13 @@ namespace Library.App.ViewModels
                 };
 
             SearchCommand = new RelayCommand((o) => Search());
-            //OpenAddReader = new RelayCommand((o) => OpenAddReader());
+            OpenAddReaderCommand = new RelayCommand((o) => OpenAddReader());
+        }
+
+        private void OpenAddReader()
+        {
+            var window = _addReaderWindowFactory.Create();
+            window.Show();
         }
 
         public void Search()
